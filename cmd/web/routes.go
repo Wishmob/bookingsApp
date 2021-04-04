@@ -17,6 +17,11 @@ func routes(app *config.AppConfig) http.Handler {
 
 	mux.Get("/", handlers.Repo.Home)
 	mux.Get("/about", handlers.Repo.About)
+	mux.Get("/generals_quarters", handlers.Repo.Generals)
+	mux.Get("/majors_suit", handlers.Repo.Majors)
+	mux.Get("/make_reservation", handlers.Repo.Reservation)
+	mux.Get("/search_availability", handlers.Repo.Availability)
+	mux.Get("/contact", handlers.Repo.Contact)
 	//setting up fileserver to handle static files (images etc.)
 	fileserver := http.FileServer(http.Dir("./static/"))
 	mux.Handle("/static/*", http.StripPrefix("/static/", fileserver))

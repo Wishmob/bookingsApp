@@ -1,0 +1,82 @@
+{{template "base" .}}
+
+{{define "content"}}
+
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <img
+        src="/static/images/majors-suite.png"
+        class="img-fluid mx-auto d-flex img-thumbnail room-image"
+        alt="room image"
+      />
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <h1 class="text-center mt-4">Major's Suit</h1>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur itaque ea blanditiis quibusdam
+        libero dolor cum obcaecati ipsa eveniet! Tenetur soluta debitis ratione reiciendis mollitia
+        libero laboriosam unde perferendis delectus iste, hic non quos minima laborum veritatis
+        voluptatum error! Accusantium nobis sed temporibus tempore eaque incidunt repellat voluptates
+        eos! Dicta aspernatur distinctio architecto commodi quas nobis, hic adipisci nulla.et! Tenetur
+        soluta debitis ratione reiciendis mollitia libero laboriosam unde perferendis delectus iste, hic
+        non quos minima laborum veritatis voluptatum error! Accusantium nobis sed temporibus tempore.
+      </p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col text-center">
+      <button id="check-availability-btn" class="btn btn-success p-3" href="#!">
+        Check availability
+      </button>
+    </div>
+  </div>
+</div>
+{{ end }}
+
+{{define "js"}}
+<script>
+  //
+  //sweet alert
+  document.getElementById("check-availability-btn").addEventListener("click", function () {
+    //attention.successToast({msg: "Hai", icon: "success"});
+    //attention.error({ msg: "Moin", title: "titlels" });
+
+    let htmlx = `
+        <form
+            action="reservation.html"
+            method="GET"
+            class="needs-validation"
+            novalidate
+          >
+            <div id="modalDateInput">
+              <div class="row">
+                <div class="col">
+                  <input
+                    required
+                    class="form-control"
+                    type="text"
+                    name="start"
+                    placeholder="Arrival"
+                  />
+                </div>
+                <div class="col">
+                  <input
+                    required
+                    class="form-control needs-validation"
+                    type="text"
+                    name="end"
+                    placeholder="Departure"
+                  />
+                </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        `;
+    attention.custom({ msg: htmlx, title: "Search availability" });
+  });
+</script>
+{{ end }}
