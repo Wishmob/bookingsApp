@@ -1,10 +1,12 @@
 package handlers
 
 import (
+	"fmt"
+	"net/http"
+
 	"github.com/Wishmob/bookingsApp/pkg/config"
 	"github.com/Wishmob/bookingsApp/pkg/models"
 	"github.com/Wishmob/bookingsApp/pkg/render"
-	"net/http"
 )
 
 // Repo the repository used by the handlers
@@ -32,7 +34,7 @@ func (m *Repository) Home(w http.ResponseWriter, r *http.Request) {
 	remoteIP := r.RemoteAddr
 	m.App.Session.Put(r.Context(), "remote_ip", remoteIP)
 
-	render.RenderTemplate(w, "home.page.tmpl", &models.TemplateData{})
+	render.RenderTemplate(w, r, "home.page.tmpl", &models.TemplateData{})
 }
 
 // About is the handler for the about page
@@ -45,24 +47,35 @@ func (m *Repository) About(w http.ResponseWriter, r *http.Request) {
 	stringMap["remote_ip"] = remoteIP
 
 	// send data to the template
-	render.RenderTemplate(w, "about.page.tmpl", &models.TemplateData{
+	render.RenderTemplate(w, r, "about.page.tmpl", &models.TemplateData{
 		StringMap: stringMap,
 	})
 }
 
 func (m *Repository) Generals(w http.ResponseWriter, r *http.Request) {
-	render.RenderTemplate(w, "generals-quarters.page.tmpl", &models.TemplateData{})
+	render.RenderTemplate(w, r, "generals-quarters.page.tmpl", &models.TemplateData{})
 }
 
 func (m *Repository) Majors(w http.ResponseWriter, r *http.Request) {
-	render.RenderTemplate(w, "majors-suite.page.tmpl", &models.TemplateData{})
+	render.RenderTemplate(w, r, "majors-suite.page.tmpl", &models.TemplateData{})
 }
 func (m *Repository) Reservation(w http.ResponseWriter, r *http.Request) {
-	render.RenderTemplate(w, "make-reservation.page.tmpl", &models.TemplateData{})
+	render.RenderTemplate(w, r, "make-reservation.page.tmpl", &models.TemplateData{})
+}
+func (m *Repository) PostReservation(w http.ResponseWriter, r *http.Request) {
+	//render.RenderTemplate(w, r, "make-reservation.page.tmpl", &models.TemplateData{})
+	//end := r.Form.Get("end")
+	//start := r.Form.Get("start")
+	//w.Write([]byte(fmt.Sprintf("Dates are %s and %s",start, end )))
 }
 func (m *Repository) Availability(w http.ResponseWriter, r *http.Request) {
-	render.RenderTemplate(w, "search-availability.page.tmpl", &models.TemplateData{})
+	render.RenderTemplate(w, r, "search-availability.page.tmpl", &models.TemplateData{})
+}
+func (m *Repository) PostAvailability(w http.ResponseWriter, r *http.Request) {
+	end := r.Form.Get("end")
+	start := r.Form.Get("start")
+	w.Write([]byte(fmt.Sprintf("Dates are %s and %s",start, end )))
 }
 func (m *Repository) Contact(w http.ResponseWriter, r *http.Request) {
-	render.RenderTemplate(w, "contact.page.tmpl", &models.TemplateData{})
+	render.RenderTemplate(w, r, "contact.page.tmpl", &models.TemplateData{})
 }

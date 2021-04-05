@@ -6,16 +6,23 @@
     <div class="col-md-3"></div>
     <div class="col-md-6">
       <h1 class="mt-4">Search for availability</h1>
-      <form action="/make-reservation" method="GET" class="needs-validation" novalidate>
+      <form action="/search_availability" method="POST" class="needs-validation" novalidate>
+        <input type="hidden" name="csrf_token" value="{{.CSRFToken}}" />
         <div id="dateInput">
           <div class="row">
             <div class="col">
-              <input required class="form-control" type="text" name="start" placeholder="Arrival" />
+              <input
+                required
+                class="form-control"
+                type="text"
+                name="start"
+                placeholder="Arrival"
+              />
             </div>
             <div class="col">
               <input
                 required
-                class="form-control needs-validation"
+                class="form-control"
                 type="text"
                 name="end"
                 placeholder="Departure"
@@ -29,7 +36,6 @@
       </form>
     </div>
   </div>
-  <button id="testbtn" class="btn btn-warning">Test Button</button>
 </div>
 {{ end }}
 
