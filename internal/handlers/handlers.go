@@ -1,12 +1,13 @@
 package handlers
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 
-	"github.com/Wishmob/bookingsApp/pkg/config"
-	"github.com/Wishmob/bookingsApp/pkg/models"
-	"github.com/Wishmob/bookingsApp/pkg/render"
+	"github.com/Wishmob/bookingsApp/internal/config"
+	"github.com/Wishmob/bookingsApp/internal/models"
+	"github.com/Wishmob/bookingsApp/internal/render"
 )
 
 // Repo the repository used by the handlers
@@ -78,4 +79,21 @@ func (m *Repository) PostAvailability(w http.ResponseWriter, r *http.Request) {
 }
 func (m *Repository) Contact(w http.ResponseWriter, r *http.Request) {
 	render.RenderTemplate(w, r, "contact.page.tmpl", &models.TemplateData{})
+}
+
+type jsonTestData struct {
+	Ok bool `json:"ok"`
+	Message string `json:"message"`
+}
+func (m *Repository) JsonTest(w http.ResponseWriter, r *http.Request) {
+	data := jsonTestData{
+		Ok: true,
+		Message: "Moijeee",
+	}
+	out, err := json.MarshalIndent(data, "", "  ")
+	if err != nil {
+		fmt.Println(err)
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(out)
 }

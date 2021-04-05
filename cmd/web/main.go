@@ -1,9 +1,9 @@
 package main
 
 import (
-	"github.com/Wishmob/bookingsApp/pkg/config"
-	"github.com/Wishmob/bookingsApp/pkg/handlers"
-	"github.com/Wishmob/bookingsApp/pkg/render"
+	"github.com/Wishmob/bookingsApp/internal/config"
+	"github.com/Wishmob/bookingsApp/internal/handlers"
+	"github.com/Wishmob/bookingsApp/internal/render"
 	"fmt"
 	"github.com/alexedwards/scs/v2"
 	"log"

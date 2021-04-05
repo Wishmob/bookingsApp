@@ -45,7 +45,8 @@
 
     let htmlx = `
         <form
-            action="reservation.html"
+            id="check-availability-form"
+            action=""
             method="GET"
             class="needs-validation"
             novalidate
@@ -57,6 +58,7 @@
                     required
                     class="form-control"
                     type="text"
+                    id="start"
                     name="start"
                     placeholder="Arrival"
                   />
@@ -67,6 +69,7 @@
                     class="form-control needs-validation"
                     type="text"
                     name="end"
+                    id="end"
                     placeholder="Departure"
                   />
                 </div>
@@ -75,7 +78,35 @@
             </div>
           </form>
         `;
-    attention.custom({ msg: htmlx, title: "Search availability" });
+    attention.custom({
+      msg: htmlx,
+      title: "Search availability",
+      willOpen: () => {
+        const elem = document.getElementById("modalDateInput");
+        const rangepicker = new DateRangePicker(elem, {
+          // ...options
+          format: "yyyy-mm-dd",
+          showOnFocus: true,
+        });
+      },
+      callback: function (result) {
+        console.log("result");
+
+        let availabilityForm = document.getElementById("check-availability-form");
+        let formData = new FormData(availabilityForm);
+        formData.append("csrf_token", "{{.CSRFToken}}");
+        fetch("/search_availability_json", {
+          method: "post",
+          body: formData,
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log(data);
+            console.log(data.ok);
+            console.log(data.message);
+          });
+      },
+    });
   });
 </script>
 {{ end }}

@@ -8,8 +8,8 @@ import (
 	"net/http"
 	"path/filepath"
 
-	"github.com/Wishmob/bookingsApp/pkg/config"
-	"github.com/Wishmob/bookingsApp/pkg/models"
+	"github.com/Wishmob/bookingsApp/internal/config"
+	"github.com/Wishmob/bookingsApp/internal/models"
 	"github.com/justinas/nosurf"
 )
 

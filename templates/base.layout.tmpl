@@ -170,29 +170,34 @@
 
         async function custom(c) {
           const { msg = "", title = "Titulus" } = c;
-          const { value: formValues } = await Swal.fire({
+          const { value: result } = await Swal.fire({
             title: title,
             html: msg,
             focusConfirm: true,
             backdrop: false,
             showCancelButton: true,
             preConfirm: () => {
-              return [
-                document.getElementById("swal-input1").value,
-                document.getElementById("swal-input2").value,
-              ];
+              return [document.getElementById("start").value, document.getElementById("end").value];
             },
             willOpen: () => {
-              const elem = document.getElementById("modalDateInput");
-              const rangepicker = new DateRangePicker(elem, {
-                // ...options
-                format: "yyyy-mm-dd",
-                showOnFocus: true,
-              });
+              if(c.willOpen !== undefined){
+                c.willOpen();
+              }
             },
           });
-          if (formValues) {
-            Swal.fire(JSON.stringify(formValues));
+          if (result) {
+            //Swal.fire(JSON.stringify(result));
+            if (result.dismiss !== Swal.DismissReason.cancel) {
+              if (result.value !== "") {
+                if (c.callback !== undefined) {
+                  c.callback(result);
+                } else {
+                  c.callback(false);
+                }
+              } else {
+                c.callback(false);
+              }
+            }
           }
         }
 
