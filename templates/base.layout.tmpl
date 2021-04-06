@@ -68,6 +68,9 @@
             <li class="nav-item">
               <a class="nav-link" href="/contact">Contact</a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/make_reservation">MakeRes</a>
+            </li>
           </ul>
         </div>
       </div>
@@ -137,6 +140,7 @@
       })();
       //----JS Module for Modals & Search availability modal----
       function Prompt() {
+        //toast in top right corner
         function successToast(c) {
           const { msg = "", icon = "success" } = c;
 
@@ -157,6 +161,7 @@
             title: msg,
           });
         }
+        //error modal
         function error(c) {
           const { title = "", msg = "", icon = "error", buttonText = "Ok" } = c;
 
@@ -167,9 +172,10 @@
             confirmButtonText: buttonText,
           });
         }
-
+        //modal which can display html form & process data
         async function custom(c) {
           const { msg = "", title = "Titulus" } = c;
+          //display modal and return result data from possible html form
           const { value: result } = await Swal.fire({
             title: title,
             html: msg,
@@ -179,12 +185,13 @@
             preConfirm: () => {
               return [document.getElementById("start").value, document.getElementById("end").value];
             },
-            willOpen: () => {
+            willOpen: () => { //willOpen function can be passed to custom function
               if(c.willOpen !== undefined){
                 c.willOpen();
               }
             },
           });
+          //->call custom callback function given by calling function in params with result data
           if (result) {
             //Swal.fire(JSON.stringify(result));
             if (result.dismiss !== Swal.DismissReason.cancel) {

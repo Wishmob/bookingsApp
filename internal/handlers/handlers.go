@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"github.com/Wishmob/bookingsApp/internal/config"
+	"github.com/Wishmob/bookingsApp/internal/forms"
 	"github.com/Wishmob/bookingsApp/internal/models"
 	"github.com/Wishmob/bookingsApp/internal/render"
 )
@@ -61,14 +62,14 @@ func (m *Repository) Majors(w http.ResponseWriter, r *http.Request) {
 	render.RenderTemplate(w, r, "majors-suite.page.tmpl", &models.TemplateData{})
 }
 func (m *Repository) Reservation(w http.ResponseWriter, r *http.Request) {
-	render.RenderTemplate(w, r, "make-reservation.page.tmpl", &models.TemplateData{})
+	render.RenderTemplate(w, r, "make-reservation.page.tmpl", &models.TemplateData{
+		Form: forms.New(nil),
+	})
 }
+//handles the posting of a reservation form
 func (m *Repository) PostReservation(w http.ResponseWriter, r *http.Request) {
-	//render.RenderTemplate(w, r, "make-reservation.page.tmpl", &models.TemplateData{})
-	//end := r.Form.Get("end")
-	//start := r.Form.Get("start")
-	//w.Write([]byte(fmt.Sprintf("Dates are %s and %s",start, end )))
 }
+
 func (m *Repository) Availability(w http.ResponseWriter, r *http.Request) {
 	render.RenderTemplate(w, r, "search-availability.page.tmpl", &models.TemplateData{})
 }
