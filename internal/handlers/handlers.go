@@ -86,6 +86,7 @@ func (m *Repository) PostReservation(w http.ResponseWriter, r *http.Request) {
 		Phone: r.Form.Get("phone"),
 	}
 
+
 	form := forms.New(r.PostForm)
 
 	form.Required("first_name", "last_name", "email")
@@ -100,6 +101,9 @@ func (m *Repository) PostReservation(w http.ResponseWriter, r *http.Request) {
 		})
 		return
 	}
+
+	m.App.Session.Put(r.Context(), "reservation", reservation)
+	http.Redirect(w, r, "/reservation_summary", http.StatusSeeOther)
 }
 
 func (m *Repository) Availability(w http.ResponseWriter, r *http.Request) {
@@ -130,4 +134,21 @@ func (m *Repository) JsonTest(w http.ResponseWriter, r *http.Request) {
 	}
 	w.Header().Set("Content-Type", "application/json")
 	w.Write(out)
+}
+
+func (m *Repository) ReservationSummary(w http.ResponseWriter, r *http.Request) {
+	reservation, ok := m.App.Session.Get(r.Context(), "reservation").(models.Reservation)
+
+	if !ok {
+		fmt.Println("Could not load reservation from session")
+		m.App.Session.Put(r.Context(), "error", "Couldn't load reservation from session")
+		http.Redirect(w, r, "/", http.StatusTemporaryRedirect)
+		return
+	}
+	data := make(map[string]interface{})
+	data["reservation"] = reservation
+	m.App.Session.Remove(r.Context(), "reservation")
+	render.RenderTemplate(w, r, "reservation-summary.page.tmpl", &models.TemplateData{
+		Data: data,
+	})
 }

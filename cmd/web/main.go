@@ -1,14 +1,17 @@
 package main
 
 import (
-	"github.com/Wishmob/bookingsApp/internal/config"
-	"github.com/Wishmob/bookingsApp/internal/handlers"
-	"github.com/Wishmob/bookingsApp/internal/render"
+	"encoding/gob"
 	"fmt"
-	"github.com/alexedwards/scs/v2"
 	"log"
 	"net/http"
 	"time"
+
+	"github.com/Wishmob/bookingsApp/internal/config"
+	"github.com/Wishmob/bookingsApp/internal/handlers"
+	"github.com/Wishmob/bookingsApp/internal/models"
+	"github.com/Wishmob/bookingsApp/internal/render"
+	"github.com/alexedwards/scs/v2"
 )
 
 const portNumber = ":8080"
@@ -21,6 +24,7 @@ func main() {
 	// change this to true when in production
 	app.InProduction = false
 
+	gob.Register(models.Reservation{}) //necessary to store data other than primitives in session
 	// set up the session
 	session = scs.New()
 	session.Lifetime = 24 * time.Hour
@@ -36,7 +40,7 @@ func main() {
 	}
 
 	app.TemplateCache = tc
-	app.UseCache = false
+	app.UseCache = app.InProduction
 
 	repo := handlers.NewRepo(&app)
 	handlers.NewHandlers(repo)
