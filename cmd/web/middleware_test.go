@@ -7,24 +7,24 @@ import (
 )
 
 func TestNoSurf(t *testing.T) {
-	var myH myHandler
-	h := NoSurf(&myH)
+	var testHandler myHandler
+	h := NoSurf(&testHandler)
 
 	switch v := h.(type) {
 	case http.Handler:
-		// do nothing
+		// do nothing -> test successful
 	default:
 		t.Error(fmt.Sprintf("type is not http.Handler but is %T", v))
 	}
 }
 
 func TestSessionLoad(t *testing.T) {
-	var myH myHandler
-	h := SessionLoad(&myH)
+	var testHandler myHandler
+	h := SessionLoad(&testHandler)
 
 	switch v := h.(type) {
 	case http.Handler:
-		// do nothing
+		// do nothing -> test successful
 	default:
 		t.Error(fmt.Sprintf("type is not http.Handler but is %T", v))
 	}
