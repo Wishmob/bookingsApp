@@ -5,10 +5,12 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 	"time"
 
 	"github.com/Wishmob/bookingsApp/internal/config"
 	"github.com/Wishmob/bookingsApp/internal/handlers"
+	"github.com/Wishmob/bookingsApp/internal/helpers"
 	"github.com/Wishmob/bookingsApp/internal/models"
 	"github.com/Wishmob/bookingsApp/internal/render"
 	"github.com/alexedwards/scs/v2"
@@ -40,10 +42,17 @@ func main() {
 }
 
 func run() error {
-		// change this to true when in production
+	// change this to true when in production
 	app.InProduction = false
 
 	gob.Register(models.Reservation{}) //necessary to store data other than primitives in session
+
+	//set up error & infolog
+	infolog := log.New(os.Stdout, "INFO\t", log.Ldate|log.Ltime)
+	app.InfoLog = infolog
+	errorLog := log.New(os.Stdout, "ERROR\t", log.Ldate|log.Ltime|log.Lshortfile)
+	app.ErrorLog = errorLog
+
 	// set up the session
 	session = scs.New()
 	session.Lifetime = 24 * time.Hour
@@ -66,5 +75,7 @@ func run() error {
 	handlers.NewHandlers(repo)
 
 	render.NewTemplates(&app)
+	helpers.NewHelpers(&app)
+
 	return nil
 }

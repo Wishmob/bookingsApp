@@ -29,13 +29,14 @@ func (f *Form) Valid() bool {
 }
 
 //Has checks if a form field is in post and not empty
-func (f *Form) Has(field string) bool{
-	if  f.Get(field) == ""{
+func (f *Form) Has(field string) bool {
+	if f.Get(field) == "" {
 		return false
 	} else {
 		return true
 	}
 }
+
 // Required checks for required fields
 func (f *Form) Required(fields ...string) {
 	for _, field := range fields {
@@ -58,7 +59,7 @@ func (f *Form) MinLength(field string, length int) bool {
 
 //Checks if given field is an email adress
 func (f *Form) IsEmail(field string) {
-	if !govalidator.IsEmail(f.Get(field)){
+	if !govalidator.IsEmail(f.Get(field)) {
 		f.Errors.Add(field, "Invalid email adress")
 	}
 }

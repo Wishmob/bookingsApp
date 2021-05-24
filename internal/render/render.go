@@ -27,7 +27,7 @@ func AddDefaultData(td *models.TemplateData, r *http.Request) *models.TemplateDa
 	td.Error = app.Session.PopString(r.Context(), "error")
 	td.Flash = app.Session.PopString(r.Context(), "flash")
 	td.Warning = app.Session.PopString(r.Context(), "warning")
-	td.CSRFToken = nosurf.Token(r) 
+	td.CSRFToken = nosurf.Token(r)
 	return td
 }
 

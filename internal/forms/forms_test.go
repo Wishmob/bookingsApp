@@ -79,7 +79,7 @@ func TestForm_Has(t *testing.T) {
 		t.Error("says that form does not have field, when it does ")
 	}
 	formHasField = form.Has("b")
-	if formHasField{
+	if formHasField {
 		t.Error("says that form does have field, when it doesn't")
 	}
 }
@@ -99,12 +99,12 @@ func TestForm_IsEmail(t *testing.T) {
 	form = New(r.PostForm)
 	form.IsEmail("b")
 	isValid = form.Valid()
-	if isValid{
+	if isValid {
 		t.Error("shows valid email when it is not valid")
 	}
 }
 
-func TestErrors_Get(t *testing.T){
+func TestErrors_Get(t *testing.T) {
 	postedData := url.Values{}
 	form := New(postedData)
 	if form.Errors.Get("hdga") != "" {

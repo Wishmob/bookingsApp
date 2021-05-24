@@ -2,9 +2,9 @@ package render
 
 import (
 	"encoding/gob"
-	"github.com/alexedwards/scs/v2"
 	"github.com/Wishmob/bookingsApp/internal/config"
 	"github.com/Wishmob/bookingsApp/internal/models"
+	"github.com/alexedwards/scs/v2"
 	"net/http"
 	"os"
 	"testing"

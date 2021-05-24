@@ -2,9 +2,9 @@ package main
 
 import (
 	"fmt"
-	"testing"
 	"github.com/Wishmob/bookingsApp/internal/config"
 	"github.com/go-chi/chi"
+	"testing"
 )
 
 func TestRoutes(t *testing.T) {
