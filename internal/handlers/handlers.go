@@ -7,6 +7,7 @@ import (
 
 	"github.com/Wishmob/bookingsApp/internal/config"
 	"github.com/Wishmob/bookingsApp/internal/forms"
+	"github.com/Wishmob/bookingsApp/internal/helpers"
 	"github.com/Wishmob/bookingsApp/internal/models"
 	"github.com/Wishmob/bookingsApp/internal/render"
 )
@@ -64,7 +65,8 @@ func (m *Repository) Reservation(w http.ResponseWriter, r *http.Request) {
 func (m *Repository) PostReservation(w http.ResponseWriter, r *http.Request) {
 	err := r.ParseForm()
 	if err != nil {
-		fmt.Println(err)
+		helpers.ServerError(w, err)
+		return
 	}
 
 	reservation := models.Reservation{
@@ -117,7 +119,8 @@ func (m *Repository) JsonTest(w http.ResponseWriter, r *http.Request) {
 	}
 	out, err := json.MarshalIndent(data, "", "  ")
 	if err != nil {
-		fmt.Println(err)
+		helpers.ServerError(w, err)
+		return
 	}
 	w.Header().Set("Content-Type", "application/json")
 	w.Write(out)
@@ -127,7 +130,7 @@ func (m *Repository) ReservationSummary(w http.ResponseWriter, r *http.Request) 
 	reservation, ok := m.App.Session.Get(r.Context(), "reservation").(models.Reservation)
 
 	if !ok {
-		fmt.Println("Could not load reservation from session")
+		m.App.ErrorLog.Println("Could not load reservation from session")
 		m.App.Session.Put(r.Context(), "error", "Couldn't load reservation from session")
 		http.Redirect(w, r, "/", http.StatusTemporaryRedirect)
 		return
