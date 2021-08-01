@@ -5,11 +5,11 @@ import (
 	"github.com/Wishmob/bookingsApp/internal/config"
 	"github.com/Wishmob/bookingsApp/internal/models"
 	"github.com/alexedwards/scs/v2"
+	"log"
 	"net/http"
 	"os"
 	"testing"
 	"time"
-	"log"
 )
 
 var session *scs.SessionManager

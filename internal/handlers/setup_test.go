@@ -3,19 +3,21 @@ package handlers
 import (
 	"encoding/gob"
 	"fmt"
+	"html/template"
+	"log"
+	"net/http"
+	"os"
+	"path/filepath"
+	"time"
+
 	"github.com/Wishmob/bookingsApp/internal/config"
+	"github.com/Wishmob/bookingsApp/internal/driver"
 	"github.com/Wishmob/bookingsApp/internal/models"
 	"github.com/Wishmob/bookingsApp/internal/render"
 	"github.com/alexedwards/scs/v2"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
 	"github.com/justinas/nosurf"
-	"html/template"
-	"log"
-	"net/http"
-	"path/filepath"
-	"time"
-	"os"
 )
 
 var app config.AppConfig
@@ -52,10 +54,10 @@ func getRoutes() http.Handler {
 	app.TemplateCache = tc
 	app.UseCache = true
 
-	repo := NewRepo(&app)
+	repo := NewRepo(&app, &driver.DB{})
 	NewHandlers(repo)
 
-	render.NewTemplates(&app)
+	render.NewRenderer(&app)
 
 	mux := chi.NewRouter()
 
