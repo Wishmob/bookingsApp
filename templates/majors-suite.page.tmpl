@@ -46,6 +46,7 @@
 
     let htmlx = `
         <form
+            id="check-availability-form"
             action="reservation.html"
             method="GET"
             class="needs-validation"
@@ -59,6 +60,7 @@
                     class="form-control"
                     type="text"
                     name="start"
+                    id="start"
                     placeholder="Arrival"
                   />
                 </div>
@@ -68,6 +70,7 @@
                     class="form-control needs-validation"
                     type="text"
                     name="end"
+                    id="end"
                     placeholder="Departure"
                   />
                 </div>
@@ -76,7 +79,51 @@
             </div>
           </form>
         `;
-    attention.custom({ msg: htmlx, title: "Search availability" });
+    attention.custom({
+      msg: htmlx,
+      title: "Search availability",
+      willOpen: () => {
+        const elem = document.getElementById("modalDateInput");
+        const rangepicker = new DateRangePicker(elem, {
+          // ...options
+          format: "yyyy-mm-dd",
+          showOnFocus: true,
+          minDate: new Date(),
+        });
+      },
+      callback: function (result) {
+        console.log("result");
+
+        let availabilityForm = document.getElementById("check-availability-form");
+        let formData = new FormData(availabilityForm);
+        formData.append("csrf_token", "{{.CSRFToken}}");
+        formData.append("room_id", "2");
+        fetch("/search-availability-json", {
+          method: "post",
+          body: formData,
+        })
+          .then(response => response.json())
+          .then(data => {
+            if(data.ok) {
+              attention.custom({
+                icon: 'success',
+                showConfirmButton: false,
+                msg: '<p>Room is available!</p>'
+                    + '<p><a href="/book-room?id='
+                    + data.room_id
+                    + '&s='
+                    + data.start_date
+                    + '&e='
+                    + data.end_date
+                    + '" class="btn btn-primary">'
+                    + 'Book now!</a></p>',
+            })
+            } else {
+              attention.error({msg: "no availability for given dates",})
+            }
+          });
+      },
+    });
   });
 </script>
 {{ end }}

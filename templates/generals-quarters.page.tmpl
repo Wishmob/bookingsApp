@@ -104,18 +104,18 @@
           .then(data => {
             if(data.ok) {
               attention.custom({
-                                    icon: 'success',
-                                    showConfirmButton: false,
-                                    msg: '<p>Room is available!</p>'
-                                        + '<p><a href="/book-room?id='
-                                        + data.room_id
-                                        + '&s='
-                                        + data.start_date
-                                        + '&e='
-                                        + data.end_date
-                                        + '" class="btn btn-primary">'
-                                        + 'Book now!</a></p>',
-                                })
+                icon: 'success',
+                showConfirmButton: false,
+                msg: '<p>Room is available!</p>'
+                    + '<p><a href="/book-room?id='
+                    + data.room_id
+                    + '&s='
+                    + data.start_date
+                    + '&e='
+                    + data.end_date
+                    + '" class="btn btn-primary">'
+                    + 'Book now!</a></p>',
+            })
             } else {
               attention.error({msg: "no availability for given dates",})
             }
