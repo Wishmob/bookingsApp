@@ -72,7 +72,7 @@ func getRoutes() http.Handler {
 
 	mux.Get("/search_availability", Repo.Availability)
 	mux.Post("/search_availability", Repo.PostAvailability)
-	mux.Post("/search_availability_json", Repo.JsonTest)
+	mux.Post("/search_availability_json", Repo.AvailabilityJson)
 
 	mux.Get("/contact", Repo.Contact)
 

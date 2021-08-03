@@ -174,14 +174,16 @@
           }
           //modal which can display html form & process data
           async function custom(c) {
-            const { msg = "", title = "Titulus" } = c;
+            const { icon = "", msg = "", title = "Titulus", showConfirmButton = true } = c;
             //display modal and return result data from possible html form
             const { value: result } = await Swal.fire({
+              icon : icon,
               title: title,
               html: msg,
               focusConfirm: true,
               backdrop: false,
               showCancelButton: true,
+              showConfirmButton: showConfirmButton,
               preConfirm: () => {
                 return [document.getElementById("start").value, document.getElementById("end").value];
               },

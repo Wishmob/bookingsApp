@@ -250,16 +250,34 @@ func (m *Repository) Contact(w http.ResponseWriter, r *http.Request) {
 	render.Template(w, r, "contact.page.tmpl", &models.TemplateData{})
 }
 
-type jsonTestData struct {
-	Ok      bool   `json:"ok"`
-	Message string `json:"message"`
+type jsonResponse struct {
+	OK        bool   `json:"ok"`
+	Message   string `json:"message"`
+	RoomID    string `json:"room_id"`
+	StartDate string `json:"start_date"`
+	EndDate   string `json:"end_date"`
 }
 
-func (m *Repository) JsonTest(w http.ResponseWriter, r *http.Request) {
-	data := jsonTestData{
-		Ok:      true,
-		Message: "Moijeee",
+func (m *Repository) AvailabilityJson(w http.ResponseWriter, r *http.Request) {
+	startDateString := r.Form.Get("start")
+	endDateString := r.Form.Get("end")
+	layout := "2006-01-02"
+
+	startDate, _ := time.Parse(layout, startDateString)
+	endDate, _ := time.Parse(layout, endDateString)
+
+	roomID, _ := strconv.Atoi(r.Form.Get("room_id"))
+
+	available, _ := m.DB.SearchAvailabilityByDatesByRoomID(startDate, endDate, roomID)
+
+	data := jsonResponse{
+		OK:        available,
+		Message:   "Moijeee",
+		StartDate: startDateString,
+		EndDate:   endDateString,
+		RoomID:    strconv.Itoa(roomID),
 	}
+
 	out, err := json.MarshalIndent(data, "", "  ")
 	if err != nil {
 		helpers.ServerError(w, err)

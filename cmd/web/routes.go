@@ -25,7 +25,7 @@ func routes(app *config.AppConfig) http.Handler {
 	mux.Get("/search_availability", handlers.Repo.Availability)
 	mux.Post("/search_availability", handlers.Repo.PostAvailability)
 	mux.Get("/contact", handlers.Repo.Contact)
-	mux.Post("/search_availability_json", handlers.Repo.JsonTest)
+	mux.Post("/search-availability-json", handlers.Repo.AvailabilityJson)
 	mux.Get("/choose-room/{id}", handlers.Repo.ChooseRoom)
 	//setting up fileserver to handle static files (images etc.)
 	fileserver := http.FileServer(http.Dir("./static/"))

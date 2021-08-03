@@ -86,6 +86,7 @@
           // ...options
           format: "yyyy-mm-dd",
           showOnFocus: true,
+          minDate: new Date(),
         });
       },
       callback: function (result) {
@@ -94,15 +95,30 @@
         let availabilityForm = document.getElementById("check-availability-form");
         let formData = new FormData(availabilityForm);
         formData.append("csrf_token", "{{.CSRFToken}}");
-        fetch("/search_availability_json", {
+        formData.append("room_id", "1");
+        fetch("/search-availability-json", {
           method: "post",
           body: formData,
         })
-          .then((response) => response.json())
-          .then((data) => {
-            console.log(data);
-            console.log(data.ok);
-            console.log(data.message);
+          .then(response => response.json())
+          .then(data => {
+            if(data.ok) {
+              attention.custom({
+                                    icon: 'success',
+                                    showConfirmButton: false,
+                                    msg: '<p>Room is available!</p>'
+                                        + '<p><a href="/book-room?id='
+                                        + data.room_id
+                                        + '&s='
+                                        + data.start_date
+                                        + '&e='
+                                        + data.end_date
+                                        + '" class="btn btn-primary">'
+                                        + 'Book now!</a></p>',
+                                })
+            } else {
+              attention.error({msg: "no availability for given dates",})
+            }
           });
       },
     });
