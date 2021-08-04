@@ -3,3 +3,4 @@ package-lock.json
 package.json
 bookings
 database.yml
+coverage.out

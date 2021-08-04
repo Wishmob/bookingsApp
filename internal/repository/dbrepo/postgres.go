@@ -2,6 +2,7 @@ package dbrepo
 
 import (
 	"context"
+	"log"
 	"time"
 
 	"github.com/Wishmob/bookingsApp/internal/models"
@@ -151,6 +152,7 @@ func (m *postgresDBRepo) GetRoomByID(id int) (models.Room, error) {
 	)
 
 	if err != nil {
+		log.Println("---------------")
 		return room, err
 	}
 
