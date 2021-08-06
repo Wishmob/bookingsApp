@@ -28,9 +28,22 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	listenForMail()
+	defer close(app.MailChan)
+
+	// testMsg := models.MailData{
+	// 	From:     "a@b.de",
+	// 	To:       "c@d.com",
+	// 	Subject:  "TestSubject",
+	// 	Content:  "Hello <strong>WORLD</strong>",
+	// 	Template: "basic.html",
+	// }
+	// app.MailChan <- testMsg
+
 	defer db.SQL.Close()
 
-	fmt.Printf("Starting application on port %s", portNumber)
+	fmt.Printf("Starting application on port %s\n", portNumber)
 
 	srv := &http.Server{
 		Addr:    portNumber,
@@ -66,6 +79,10 @@ func run() (*driver.DB, error) {
 	session.Cookie.Secure = app.InProduction
 
 	app.Session = session
+
+	//setting up mail chan
+	mailChan := make(chan models.MailData)
+	app.MailChan = mailChan
 
 	// connect to database
 	log.Println("Connecting to database...")

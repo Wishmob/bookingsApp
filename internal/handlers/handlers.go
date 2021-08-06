@@ -3,6 +3,7 @@ package handlers
 import (
 	"encoding/json"
 	"errors"
+	"fmt"
 	"log"
 	"net/http"
 	"strconv"
@@ -158,6 +159,42 @@ func (m *Repository) PostReservation(w http.ResponseWriter, r *http.Request) {
 		helpers.ServerError(w, err)
 		return
 	}
+
+	//send confirmation mail to customer
+	message := fmt.Sprintf(`
+		Dear %s %s,<br><br>
+
+		this is to confirm your reservation of our room %s from %s to %s.<br><br>
+
+		Yours<br>
+		Boss from se hotel <3
+	`, reservation.FirstName, reservation.LastName, reservation.Room.RoomName, reservation.StartDate.Format("2006-01-02"), reservation.EndDate.Format("2006-01-02"))
+
+	confirmationMail := models.MailData{
+		From:     "boss@hotel.com",
+		To:       reservation.Email,
+		Subject:  "Reservation Confirmation",
+		Content:  message,
+		Template: "basic.html",
+	}
+	m.App.MailChan <- confirmationMail
+
+	//send confirmation mail to owner
+	message = fmt.Sprintf(`
+		Dear Boss from se hotel,<br><br>
+
+		a new reservation of room %s from %s to %s has been made.<br><br>
+
+		Have a nice Day!
+	`, reservation.Room.RoomName, reservation.StartDate.Format("2006-01-02"), reservation.EndDate.Format("2006-01-02"))
+
+	infoMail := models.MailData{
+		From:    "info@hotel.com",
+		To:      "boss@hotel.com",
+		Subject: "New Reservation",
+		Content: message,
+	}
+	m.App.MailChan <- infoMail
 
 	m.App.Session.Put(r.Context(), "reservation", reservation)
 	http.Redirect(w, r, "/reservation-summary", http.StatusSeeOther)
