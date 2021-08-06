@@ -11,6 +11,10 @@ import (
 	mail "github.com/xhit/go-simple-mail/v2"
 )
 
+//test with mailhog:
+//brew services start mailhog
+//brew services stop mailhog
+
 func listenForMail() {
 	go func() {
 		for {
