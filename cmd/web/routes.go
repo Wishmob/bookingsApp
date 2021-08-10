@@ -31,7 +31,7 @@ func routes(app *config.AppConfig) http.Handler {
 
 	mux.Get("/user/login", handlers.Repo.ShowLogin)
 	mux.Post("/user/login", handlers.Repo.PostShowLogin)
-	mux.Post("/user/logout", handlers.Repo.Logout)
+	mux.Get("/user/logout", handlers.Repo.Logout)
 	
 	//setting up fileserver to handle static files (images etc.)
 	fileserver := http.FileServer(http.Dir("./static/"))

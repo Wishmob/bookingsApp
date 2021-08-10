@@ -20,6 +20,7 @@
     <link rel="stylesheet" type="text/css" href="/static/css/style.css" media="screen" />
     <!--Notie Css-->
     <link rel="stylesheet" type="text/css" href="https://unpkg.com/notie/dist/notie.min.css" />
+    <link rel="shortcut icon" href="/static/images/favicon.png" />
     <title>Bookings</title>
   </head>
   <body>
@@ -70,7 +71,26 @@
             </li>
             <li class="nav-item">
               {{if eq .IsAuthenticated 1}}
-              <a class="nav-link" href="/user/logout">Logout</a>
+              <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="navbarDropdown"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                Admin
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li>
+                  <a class="dropdown-item" href="/admin/dashboard">Dashboard</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="/user/logout">Logout</a>
+                </li>
+              </ul>
+            </li>
               {{else}}
               <a class="nav-link" href="/user/login">Login</a>
               {{end}}
