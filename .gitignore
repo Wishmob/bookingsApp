@@ -4,3 +4,4 @@ package.json
 bookings
 database.yml
 coverage.out
+.vscode
