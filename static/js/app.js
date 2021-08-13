@@ -44,13 +44,15 @@ function Prompt() {
       backdrop: false,
       showCancelButton: true,
       showConfirmButton: showConfirmButton,
-      preConfirm: () => {
-        return [document.getElementById("start").value, document.getElementById("end").value];
-      },
       willOpen: () => {
         //willOpen function can be passed to custom function
         if (c.willOpen !== undefined) {
           c.willOpen();
+        }
+      },
+      didOpen: () => {
+        if (c.didOpen !== undefined) {
+          c.didOpen();
         }
       },
     });
