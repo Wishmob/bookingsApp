@@ -1,48 +1,48 @@
 {{template "base" .}}
 
 {{define "content"}}
-<div class="container">
-  <div class="row">
-    <div class="col">
-      <img
-        src="/static/images/generals-quarters.png"
-        class="img-fluid mx-auto d-flex img-thumbnail room-image"
-        alt="room image"
-      />
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <img
+                        src="/static/images/generals-quarters.png"
+                        class="img-fluid mx-auto d-flex img-thumbnail room-image"
+                        alt="room image"
+                />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <h1 class="text-center mt-4">Generals Quarters</h1>
+                <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur itaque ea blanditiis quibusdam
+                    libero dolor cum obcaecati ipsa eveniet! Tenetur soluta debitis ratione reiciendis mollitia
+                    libero laboriosam unde perferendis delectus iste, hic non quos minima laborum veritatis
+                    voluptatum error! Accusantium nobis sed temporibus tempore eaque incidunt repellat voluptates
+                    eos! Dicta aspernatur distinctio architecto commodi quas nobis, hic adipisci nulla.et! Tenetur
+                    soluta debitis ratione reiciendis mollitia libero laboriosam unde perferendis delectus iste, hic
+                    non quos minima laborum veritatis voluptatum error! Accusantium nobis sed temporibus tempore.
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col text-center">
+                <button id="check-availability-btn" class="btn btn-success p-3" href="#!">
+                    Check availability
+                </button>
+            </div>
+        </div>
     </div>
-  </div>
-  <div class="row">
-    <div class="col">
-      <h1 class="text-center mt-4">Generals Quarters</h1>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur itaque ea blanditiis quibusdam
-        libero dolor cum obcaecati ipsa eveniet! Tenetur soluta debitis ratione reiciendis mollitia
-        libero laboriosam unde perferendis delectus iste, hic non quos minima laborum veritatis
-        voluptatum error! Accusantium nobis sed temporibus tempore eaque incidunt repellat voluptates
-        eos! Dicta aspernatur distinctio architecto commodi quas nobis, hic adipisci nulla.et! Tenetur
-        soluta debitis ratione reiciendis mollitia libero laboriosam unde perferendis delectus iste, hic
-        non quos minima laborum veritatis voluptatum error! Accusantium nobis sed temporibus tempore.
-      </p>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col text-center">
-      <button id="check-availability-btn" class="btn btn-success p-3" href="#!">
-        Check availability
-      </button>
-    </div>
-  </div>
-</div>
 {{ end }}
 
 {{define "js"}}
-<script>
-  //
-  //create search availability form with html content and functionality to sweet alert on button click
-  document.getElementById("check-availability-btn").addEventListener("click", function () {
-    //attention.successToast({msg: "Hai", icon: "success"});
-    //attention.error({ msg: "Moin", title: "titlels" });
-    let htmlx = `
+    <script>
+        //
+        //create search availability form with html content and functionality to sweet alert on button click
+        document.getElementById("check-availability-btn").addEventListener("click", function () {
+            //attention.successToast({msg: "Hai", icon: "success"});
+            //attention.error({ msg: "Moin", title: "titlels" });
+            let htmlx = `
         <form
             id="check-availability-form"
             action=""
@@ -77,51 +77,51 @@
             </div>
           </form>
         `;
-    attention.custom({
-      msg: htmlx,
-      title: "Search availability",
-      willOpen: () => {
-        const elem = document.getElementById("modalDateInput");
-        const rangepicker = new DateRangePicker(elem, {
-          // ...options
-          format: "yyyy-mm-dd",
-          showOnFocus: true,
-          minDate: new Date(),
-        });
-      },
-      callback: function (result) {
-        console.log("result");
+            attention.custom({
+                msg: htmlx,
+                title: "Search availability",
+                willOpen: () => {
+                    const elem = document.getElementById("modalDateInput");
+                    const rangepicker = new DateRangePicker(elem, {
+                        // ...options
+                        format: "yyyy-mm-dd",
+                        showOnFocus: true,
+                        minDate: new Date(),
+                    });
+                },
+                callback: function (result) {
+                    console.log("result");
 
-        let availabilityForm = document.getElementById("check-availability-form");
-        let formData = new FormData(availabilityForm);
-        formData.append("csrf_token", "{{.CSRFToken}}");
-        formData.append("room_id", "1");
-        fetch("/search-availability-json", {
-          method: "post",
-          body: formData,
-        })
-          .then(response => response.json())
-          .then(data => {
-            if(data.ok) {
-              attention.custom({
-                icon: 'success',
-                showConfirmButton: false,
-                msg: '<p>Room is available!</p>'
-                    + '<p><a href="/book-room?id='
-                    + data.room_id
-                    + '&s='
-                    + data.start_date
-                    + '&e='
-                    + data.end_date
-                    + '" class="btn btn-primary">'
-                    + 'Book now!</a></p>',
-            })
-            } else {
-              attention.error({msg: "no availability for given dates",})
-            }
-          });
-      },
-    });
-  });
-</script>
+                    let availabilityForm = document.getElementById("check-availability-form");
+                    let formData = new FormData(availabilityForm);
+                    formData.append("csrf_token", "{{.CSRFToken}}");
+                    formData.append("room_id", "1");
+                    fetch("/search-availability-json", {
+                        method: "post",
+                        body: formData,
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.ok) {
+                                attention.custom({
+                                    icon: 'success',
+                                    showConfirmButton: false,
+                                    msg: '<p>Room is available!</p>'
+                                        + '<p><a href="/book-room?id='
+                                        + data.room_id
+                                        + '&s='
+                                        + data.start_date
+                                        + '&e='
+                                        + data.end_date
+                                        + '" class="btn btn-primary">'
+                                        + 'Book now!</a></p>',
+                                })
+                            } else {
+                                attention.error({msg: "no availability for given dates",})
+                            }
+                        });
+                },
+            });
+        });
+    </script>
 {{ end }}

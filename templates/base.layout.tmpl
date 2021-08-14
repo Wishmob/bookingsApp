@@ -1,136 +1,136 @@
 {{define "base"}}
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
-      crossorigin="anonymous"
-    />
-    <link rel="shortcut icon" href="/static/images/favicon.png" />
-    <!--Datepicker VanillaJS-->
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.1.4/dist/css/datepicker-bs4.min.css"
-    />
-    <!--My style.css-->
-    <link rel="stylesheet" type="text/css" href="/static/css/style.css" media="screen" />
-    <!--Notie Css-->
-    <link rel="stylesheet" type="text/css" href="https://unpkg.com/notie/dist/notie.min.css" />
-    <title>Bookings</title>
-  </head>
-  <body>
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link
+                href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+                rel="stylesheet"
+                integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+                crossorigin="anonymous"
+        />
+        <link rel="shortcut icon" href="/static/images/favicon.png"/>
+        <!--Datepicker VanillaJS-->
+        <link
+                rel="stylesheet"
+                href="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.1.4/dist/css/datepicker-bs4.min.css"
+        />
+        <!--My style.css-->
+        <link rel="stylesheet" type="text/css" href="/static/css/style.css" media="screen"/>
+        <!--Notie Css-->
+        <link rel="stylesheet" type="text/css" href="https://unpkg.com/notie/dist/notie.min.css"/>
+        <title>Bookings</title>
+    </head>
+    <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="/">Bookings</a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="/">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/about">About</a>
-            </li>
-            <li class="nav-item dropdown">
-              <a
-                class="nav-link dropdown-toggle"
-                href="#"
-                id="navbarDropdown"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                Rooms
-              </a>
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li>
-                  <a class="dropdown-item" href="/generals_quarters">Generals Quarters</a>
-                </li>
-                <li>
-                  <a class="dropdown-item" href="/majors_suit">Major's Suite</a>
-                </li>
-              </ul>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/contact">Contact</a>
-            </li>
-            <li class="nav-item">
-              {{if eq .IsAuthenticated 1}}
-              <li class="nav-item dropdown">
-              <a
-                class="nav-link dropdown-toggle"
-                href="#"
-                id="navbarDropdown"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                Admin
-              </a>
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li>
-                  <a class="dropdown-item" href="/admin/dashboard">Dashboard</a>
-                </li>
-                <li>
-                  <a class="dropdown-item" href="/user/logout">Logout</a>
-                </li>
-              </ul>
-            </li>
-              {{else}}
-              <a class="nav-link" href="/user/login">Login</a>
-              
-            </li>
-            </li>
-              <a class="nav-link" href="/admin/dashboard">Dashboard</a>
-              {{end}}
-            </li>
-            
-          </ul>
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">Bookings</a>
+            <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+            >
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/about">About</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a
+                                class="nav-link dropdown-toggle"
+                                href="#"
+                                id="navbarDropdown"
+                                role="button"
+                                data-bs-toggle="dropdown"
+                                aria-expanded="false"
+                        >
+                            Rooms
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li>
+                                <a class="dropdown-item" href="/generals_quarters">Generals Quarters</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="/majors_suit">Major's Suite</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/contact">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        {{if eq .IsAuthenticated 1}}
+                    <li class="nav-item dropdown">
+                        <a
+                                class="nav-link dropdown-toggle"
+                                href="#"
+                                id="navbarDropdown"
+                                role="button"
+                                data-bs-toggle="dropdown"
+                                aria-expanded="false"
+                        >
+                            Admin
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li>
+                                <a class="dropdown-item" href="/admin/dashboard">Dashboard</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="/user/logout">Logout</a>
+                            </li>
+                        </ul>
+                    </li>
+                    {{else}}
+                        <a class="nav-link" href="/user/login">Login</a>
+
+                        </li>
+                        </li>
+                        <a class="nav-link" href="/admin/dashboard">Dashboard</a>
+                    {{end}}
+                    </li>
+
+                </ul>
+            </div>
         </div>
-      </div>
     </nav>
 
     {{block "content" .}}
 
     {{ end }}
     <div id="footer">
-      <div class="row">
-        <div class="col">
-          <p>Test</p>
+        <div class="row">
+            <div class="col">
+                <p>Test</p>
+            </div>
+            <div class="col">
+                <p>Test2</p>
+            </div>
+            <div class="col">
+                <p>Test2</p>
+            </div>
         </div>
-        <div class="col">
-          <p>Test2</p>
-        </div>
-        <div class="col">
-          <p>Test2</p>
-        </div>
-      </div>
     </div>
     <!-- Bootstrap JS & Popper.js -->
     <script
-      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"
-      integrity="sha384-SR1sx49pcuLnqZUnnPwx6FCym0wLsk5JZuNx2bPPENzswTNFaQU1RDvt3wT4gWFG"
-      crossorigin="anonymous"
+            src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"
+            integrity="sha384-SR1sx49pcuLnqZUnnPwx6FCym0wLsk5JZuNx2bPPENzswTNFaQU1RDvt3wT4gWFG"
+            crossorigin="anonymous"
     ></script>
     <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js"
-      integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc"
-      crossorigin="anonymous"
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js"
+            integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc"
+            crossorigin="anonymous"
     ></script>
     <!--Datepicker-->
     <script src="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.1.4/dist/js/datepicker-full.min.js"></script>
@@ -147,47 +147,47 @@
         let attention = Prompt();
         //----form validation----
         (function () {
-          "use strict";
+            "use strict";
 
-          // Fetch all the forms we want to apply custom Bootstrap validation styles to
-          var forms = document.querySelectorAll(".needs-validation");
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.querySelectorAll(".needs-validation");
 
-          // Loop over them and prevent submission
-          Array.prototype.slice.call(forms).forEach(function (form) {
-            form.addEventListener(
-              "submit",
-              function (event) {
-                if (!form.checkValidity()) {
-                  event.preventDefault();
-                  event.stopPropagation();
-                }
+            // Loop over them and prevent submission
+            Array.prototype.slice.call(forms).forEach(function (form) {
+                form.addEventListener(
+                    "submit",
+                    function (event) {
+                        if (!form.checkValidity()) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                        }
 
-                form.classList.add("was-validated");
-              },
-              false
-            );
-          });
+                        form.classList.add("was-validated");
+                    },
+                    false
+                );
+            });
         })();
 
         //enable notie alerts
-        function displayAlert(type, message){
-          notie.alert({
-          type: type, //'success', 'warning', 'error', 'info', 'neutral'
-          text: message,
-        });
-      }
-      {{with .Error}}
-      displayAlert("error","{{.}}")
-      {{end}}
+        function displayAlert(type, message) {
+            notie.alert({
+                type: type, //'success', 'warning', 'error', 'info', 'neutral'
+                text: message,
+            });
+        }
+        {{with .Error}}
+        displayAlert("error", "{{.}}")
+        {{end}}
 
-      {{with .Flash}}
-      displayAlert("success","{{.}}");
-      {{end}}
+        {{with .Flash}}
+        displayAlert("success", "{{.}}");
+        {{end}}
 
-      {{with .Warning}}
-      displayAlert("warning","{{.}}");
-      {{end}}
+        {{with .Warning}}
+        displayAlert("warning", "{{.}}");
+        {{end}}
     </script>
-  </body>
-</html>
+    </body>
+    </html>
 {{ end }}

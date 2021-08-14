@@ -5,3 +5,4 @@ bookings
 database.yml
 coverage.out
 .vscode
+.idea
