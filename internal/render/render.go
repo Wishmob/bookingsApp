@@ -42,7 +42,7 @@ func FormatDate(t time.Time, f string) string {
 func Iterate(count int) []int {
 	var i int
 	var items []int
-	for i = 0; i < count; i++ {
+	for i = 1; i <= count; i++ {
 		items = append(items, i)
 	}
 	return items
