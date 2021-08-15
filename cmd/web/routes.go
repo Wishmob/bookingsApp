@@ -38,7 +38,7 @@ func routes(app *config.AppConfig) http.Handler {
 	mux.Handle("/static/*", http.StripPrefix("/static/", fileserver))
 
 	mux.Route("/admin", func(mux chi.Router) {
-		//mux.Use(Auth)
+		if app.InProduction{mux.Use(Auth)}
 		mux.Get("/dashboard", handlers.Repo.AdminDashboard)
 
 		mux.Get("/reservations-new", handlers.Repo.AdminNewReservations)
