@@ -17,10 +17,6 @@ import (
 	"github.com/Wishmob/bookingsApp/internal/models"
 )
 
-type postData struct {
-	key   string
-	value string
-}
 
 var theTests = []struct {
 	name               string

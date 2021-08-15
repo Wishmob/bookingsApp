@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/gob"
+	"flag"
 	"fmt"
 	"log"
 	"net/http"
@@ -24,6 +25,7 @@ var session *scs.SessionManager
 
 // main is the main function
 func main() {
+
 	db, err := run()
 	if err != nil {
 		log.Fatal(err)
@@ -57,14 +59,32 @@ func main() {
 }
 
 func run() (*driver.DB, error) {
-	// change this to true when in production
-	app.InProduction = false
 
 	gob.Register(models.Reservation{}) //necessary to store data other than primitives in session
 	gob.Register(models.User{})
 	gob.Register(models.Room{})
 	gob.Register(models.RoomRestriction{})
 	gob.Register(map[string]int{})
+
+	// read flags
+	inProduction := flag.Bool("production", true, "Application is in production")
+	useCache := flag.Bool("cache", true, "Use template cache")
+	dbHost := flag.String("dbhost", "localhost", "Database host")
+	dbName := flag.String("dbname", "", "Database name")
+	dbUser := flag.String("dbuser", "", "Database user")
+	dbPass := flag.String("dbpass", "", "Database password")
+	dbPort := flag.String("dbport", "5432", "Database port")
+	dbSSL := flag.String("dbssl", "disable", "Database ssl settings (disable, prefer, require)")
+
+	flag.Parse()
+
+	if *dbName == "" || *dbUser == "" {
+		fmt.Println("Missing required flags")
+		os.Exit(1)
+	}
+
+	app.InProduction = *inProduction
+	app.UseCache = *useCache
 
 	//set up error & infolog
 	infolog := log.New(os.Stdout, "INFO\t", log.Ldate|log.Ltime)
@@ -87,7 +107,8 @@ func run() (*driver.DB, error) {
 
 	// connect to database
 	log.Println("Connecting to database...")
-	db, err := driver.ConnectSQL("host=localhost port=5432 dbname=bookingsApp user=alexbreiter password=")
+	connectionString := fmt.Sprintf("host=%s port=%s dbname=%s user=%s password=%s sslmode=%s", *dbHost, *dbPort, *dbName, *dbUser, *dbPass, *dbSSL)
+	db, err := driver.ConnectSQL(connectionString)
 	if err != nil {
 		log.Fatal("Cannot connect to database! Dying...")
 	}
@@ -101,7 +122,6 @@ func run() (*driver.DB, error) {
 	}
 
 	app.TemplateCache = tc
-	app.UseCache = app.InProduction
 
 	repo := handlers.NewRepo(&app, db)
 	handlers.NewHandlers(repo)

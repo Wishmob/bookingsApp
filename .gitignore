@@ -6,3 +6,4 @@ database.yml
 coverage.out
 .vscode
 .idea
+run.sh
