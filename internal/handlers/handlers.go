@@ -89,12 +89,12 @@ func (m *Repository) Reservation(w http.ResponseWriter, r *http.Request) {
 
 	m.App.Session.Put(r.Context(), "reservation", reservation)
 
-	startDate := reservation.StartDate.Format("2006-01-02")
-	endDate := reservation.EndDate.Format("2006-01-02")
-
-	stringMap := make(map[string]string)
-	stringMap["start_date"] = startDate
-	stringMap["end_date"] = endDate
+	//not needed because we can get it directly out of the reservation stored in session
+	// startDate := reservation.StartDate.Format("2006-01-02")
+	// endDate := reservation.EndDate.Format("2006-01-02")
+	// stringMap := make(map[string]string)
+	// stringMap["start_date"] = startDate
+	// stringMap["end_date"] = endDate
 
 	data := make(map[string]interface{})
 	data["reservation"] = reservation
@@ -102,7 +102,7 @@ func (m *Repository) Reservation(w http.ResponseWriter, r *http.Request) {
 	render.Template(w, r, "make-reservation.page.tmpl", &models.TemplateData{
 		Form:      forms.New(nil),
 		Data:      data,
-		StringMap: stringMap,
+		//StringMap: stringMap,
 	})
 }
 
@@ -120,13 +120,13 @@ func (m *Repository) PostReservation(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/", http.StatusSeeOther)
 		return
 	}
+	//not needed because we can get it directly out of the reservation stored in session:
+	// startDate := reservation.StartDate.Format("2006-01-02")
+	// endDate := reservation.EndDate.Format("2006-01-02")
 
-	startDate := reservation.StartDate.Format("2006-01-02")
-	endDate := reservation.EndDate.Format("2006-01-02")
-
-	stringMap := make(map[string]string)
-	stringMap["start_date"] = startDate
-	stringMap["end_date"] = endDate
+	// stringMap := make(map[string]string)
+	// stringMap["start_date"] = startDate
+	// stringMap["end_date"] = endDate
 
 	reservation.FirstName = r.Form.Get("first_name")
 	reservation.LastName = r.Form.Get("last_name")
@@ -144,7 +144,7 @@ func (m *Repository) PostReservation(w http.ResponseWriter, r *http.Request) {
 		render.Template(w, r, "make-reservation.page.tmpl", &models.TemplateData{
 			Form: form,
 			Data: data,
-			StringMap: stringMap,
+			//StringMap: stringMap,
 		})
 		return
 	}
